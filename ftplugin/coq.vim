@@ -22,8 +22,12 @@ command! CoqRunToCursor call <sid>runtocursor()
 function! s:runtocursor()
 
   let input = join(getline(1, '.'), "\n")
-
-  let output = split(system('coqtop', input), '\v\n\zs((\w|'')+ \< )\1*')
+  let option = ''
+  if filereadable('./_CoqProject')
+    for line in readfile('./_CoqProject')
+      let option = option . line                                                                                                                                                   endfor
+  endif
+  let output = split(system('coqtop ' . option, input), '\v\n\zs((\w|'')+ \< )\1*')
 
   " get last non-empty line of output
   let last = ''
