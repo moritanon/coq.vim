@@ -39,7 +39,8 @@ function! s:runtocursor()
 
   let nr = bufwinnr('__coq_ide__')
   if nr == -1
-    silent! execute '10split' '__coq_ide__'
+    setlocal splitright
+    silent! execute 'vsplit' '__coq_ide__'
     setlocal buftype=nofile
     setlocal noswapfile
     setlocal nonumber
